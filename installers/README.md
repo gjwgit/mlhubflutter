@@ -10,7 +10,7 @@ MacOS, and Windows).
 ## Prerequisite
 
 Install [mlhub](https:///mlhub.au) and the mlhub
-[openai](https://survivor.togaware.com/mlhub/openai.html):
+[openai](https://survivor.togaware.com/mlhub/openai.html), [colorize photos](https://survivor.togaware.com/mlhub/colorize.html), [cars identification](https://survivor.togaware.com/mlhub/cars.html):
 
 ```bash
 pip install mlhub
