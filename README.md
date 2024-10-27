@@ -36,3 +36,7 @@ Colorize black-and-white images from an image input, a folder of images or the U
 #### Identify Cars
 Identify the make and model of a car from an image input.
 ![Identify Car Page](images/IdentifyCar.png)
+
+### Log
+The Log page displays all the commands executed and their outputs.
+![Log Page](images/Log.png)
