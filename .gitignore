@@ -3,6 +3,8 @@
 pubspec.lock
 installers/*.tar.gz
 *~
+ignore
+ARCHIVE
 
 
 # Miscellaneous
