@@ -27,7 +27,10 @@ import 'package:flutter/material.dart';
 
 Widget aboutButton(BuildContext context, String appVersion) {
   return IconButton(
-    icon: const Icon(Icons.info),
+    icon: const Icon(
+      Icons.info,
+      color: Colors.blue,
+    ),
     onPressed: () => showAboutDialog(
       context: context,
       applicationVersion: 'Current version: $appVersion',
