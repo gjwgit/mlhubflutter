@@ -1,6 +1,6 @@
 /// The log page capturing the executed ML commands and the outputs.
 ///
-/// Copyright (C) 2024 The Authors
+/// Copyright (C) 2024
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -19,7 +19,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Ting Tang
+/// Authors: Ting Tang, Graham Williams
 
 library;
 
@@ -27,6 +27,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:mlflutter/utils/save_file.dart';
 
@@ -72,10 +73,11 @@ class LogState extends ConsumerState<Log> {
                           ), // Insert a Divider if the log has a timestamp
                         ListTile(
                           title: Text(
+                            // Remove the separator marker when displaying
                             logs[index].replaceAll(
                               '---',
                               '',
-                            ), // Remove the separator marker when displaying
+                            ),
                             style: const TextStyle(fontFamily: 'Monospace'),
                           ),
                         ),
@@ -88,21 +90,47 @@ class LogState extends ConsumerState<Log> {
       floatingActionButton: FloatingActionButton(
         onPressed: logs.isNotEmpty
             ? () async {
-                String result = await saveToFile(
-                  content: ref.read(logProvider).join('\n'),
-                  defaultFileName:
-                      'mlflutter_log_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.txt',
+                // Cleanup the content of the log to be a runnable shell script.
+                String content = ref
+                    .read(logProvider)
+                    .join('\n')
+                    .replaceAll('---', '\n# ')
+                    .replaceAll('Command', '#\n# Command')
+                    .replaceAll('Output:', '\n# Output:\n#')
+                    .replaceAll(RegExp(r'\nml '), '\n\nml ')
+                    .replaceAllMapped(
+                  RegExp(r'(?<=\n)(?!#|ml |\n)(.*?)(?=\n)', dotAll: true),
+                  (Match match) {
+                    return '# ${match.group(0)}';
+                  },
                 );
-                if (mounted) {
+                String result = await saveToFile(
+                  // Include the hash bang for a runable shell script.
+                  content: '#! /bin/sh\n$content',
+                  defaultFileName:
+                      'mlflutter_log_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.sh',
+                );
+                if (context.mounted) {
                   ScaffoldMessenger.of(context)
                       .showSnackBar(SnackBar(content: Text(result)));
                 }
               }
             : null,
-        tooltip: 'Save Logs',
-        backgroundColor: logs.isNotEmpty ? null : Colors.grey,
-        foregroundColor: logs.isNotEmpty ? null : Colors.black45,
-        child: const Icon(Icons.save),
+        backgroundColor: logs.isNotEmpty ? Colors.deepPurple[100] : Colors.grey,
+        foregroundColor: logs.isNotEmpty ? Colors.blue : Colors.black45,
+        child: MarkdownTooltip(
+          message: '''
+
+          **Save the Log** Tap here${logs.isEmpty ? ', once the log has content,' : ''}
+          to save this log as a shell script file, with a filename of your
+          choice. This is useful for later reference and for running the
+          commands separately to the app in a command line shell. The default
+          filename includes a timestamp for ease of reference and to avoid
+          overwriting previously saved scripts.
+
+          ''',
+          child: Icon(Icons.save),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
