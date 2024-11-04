@@ -129,7 +129,7 @@ class LogState extends ConsumerState<Log> {
           overwriting previously saved scripts.
 
           ''',
-          child: Icon(Icons.save),
+          child: const Icon(Icons.save),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
