@@ -26,11 +26,7 @@ dependencies:
     git:
       url: https://github.com/leanflutter/window_manager.git
       ref: main
-  markdown_tooltip:
-    # path: ../markdown_tooltip
-    git:
-      url: https://github.com/gjwgit/markdown_tooltip
-      ref: dev
+  markdown_tooltip: ^0.0.2
   cross_file: any
   path: any
   flutter_markdown: any

@@ -122,11 +122,12 @@ class LogState extends ConsumerState<Log> {
           message: '''
 
           **Save the Log** Tap here${logs.isEmpty ? ', once the log has content,' : ''}
-          to save this log as a shell script file, with a filename of your
+          to save this log as a shell script, with a filename of your
           choice. This is useful for later reference and for running the
           commands separately to the app in a command line shell. The default
           filename includes a timestamp for ease of reference and to avoid
-          overwriting previously saved scripts.
+          overwriting previously saved scripts, with a default file extension
+          of **sh**.
 
           ''',
           child: const Icon(Icons.save),
