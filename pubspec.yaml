@@ -1,49 +1,48 @@
 name: mlflutter
-description: "A Flutter app for MLHub."
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+description: "A Flutter app for the Machine Learning Hub."
+publish_to: 'none'
 
-version: 0.0.17+5
+version: 0.1.0+6
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
-  intl: ^0.19.0 # For formatting timestamp.
-  cupertino_icons: ^1.0.2  # Use with the CupertinoIcons class for iOS style icons.
-  desktop_drop: ^0.4.4  # For drag and drop file functionality.
-  dropdown_search: ^5.0.6  # For choosing the input audio language option.
-  file_picker: ^8.0.0+1  # For choosing the file from local.
   flutter:
     sdk: flutter
-  flutter_riverpod: ^2.5.1  # For keeping track of the commands to write on the log page.
-  mime: ^1.0.5  # For detecting the input file type.
-  package_info_plus: ^5.0.1  # For querying the version number of the app.
-  provider: ^6.1.2  # To make InheritedWidget easier to use and more reusable.
-  riverpod_annotation: ^2.3.5  # For riverpod annotations.
-  window_manager:  # For fixing the size of the desktop app window.
-    git:
-      url: https://github.com/leanflutter/window_manager.git
-      ref: main
-  markdown_tooltip: ^0.0.2
-  cross_file: any
-  path: any
-  flutter_markdown: any
+
+  cross_file:        ^0.3.4   # Work with files across multiple platforms.
+  desktop_drop:      ^0.4.4   # Drag and drop file functionality.
+  dropdown_search:   ^5.0.6   # Choose the input audio language option.
+  file_picker:       ^8.0.0+1 # Choose a file from local storage.
+  flutter_riverpod:  ^2.5.1   # Keep track of the commands to write on the log page.
+  intl:              ^0.19.0  # Format timestamps.
+  markdown_tooltip:  ^0.0.2   # Allow tool tips to be formatted.
+  mime:              ^1.0.5   # Detect the input file type.
+  package_info_plus: ^8.1.1   # Query the version number of the app.
+  path:              ^1.9.0   # Cross-platform path manipulation
+  window_manager:    ^0.4.3   # Fix the size of the desktop app window.
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  riverpod_generator: ^2.3.5
-  # riverpod_lint: ^2.3.2
 
   custom_lint: ^0.6.4
+  dependency_validator: ^4.1.1
+  flutter_lints: ^4.0.0
+  riverpod_generator: ^2.3.5
+
+  # The original `dart-code-metrics` is end of live and has migrated to
+  # a paid service. This fork maintains it's compatibility with the
+  # latest flutter.
+
   dart_code_metrics:
     git:
-      url: https://github.com/Zheyuan-Robert-Xu/dart-code-metrics.git
+      url: https://github.com/anusii/dart-code-metrics.git
       ref: master
-  flutter_lints: ^4.0.0
 
-# The following section is specific to Flutter packages.
+dependency_overrides:
+  collection: ^1.19.0 # Required for dart-code-metrics.
+
 flutter:
   uses-material-design: true
